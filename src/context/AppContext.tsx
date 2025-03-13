@@ -28,15 +28,9 @@ interface AppContextType {
   };
   language: LanguageType;
   theme: ThemeType;
-  parentalControls: {
-    difficultyLevel: number;
-    timeLimit: number;
-    isEnabled: boolean;
-  };
   updateUser: (user: Partial<AppContextType['currentUser']>) => void;
   updateLanguage: (language: LanguageType) => void;
   updateTheme: (theme: ThemeType) => void;
-  updateParentalControls: (controls: Partial<AppContextType['parentalControls']>) => void;
   updateProgress: (module: string, completed: boolean, stars: number) => void;
 }
 
@@ -50,15 +44,9 @@ const AppContext = createContext<AppContextType>({
   },
   language: 'english',
   theme: 'light',
-  parentalControls: {
-    difficultyLevel: 1,
-    timeLimit: 30,
-    isEnabled: true,
-  },
   updateUser: () => {},
   updateLanguage: () => {},
   updateTheme: () => {},
-  updateParentalControls: () => {},
   updateProgress: () => {},
 });
 
@@ -72,11 +60,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const [language, setLanguage] = useState<LanguageType>('english');
   const [theme, setTheme] = useState<ThemeType>('light');
-  const [parentalControls, setParentalControls] = useState({
-    difficultyLevel: 1,
-    timeLimit: 30,
-    isEnabled: true,
-  });
 
   const updateUser = (user: Partial<AppContextType['currentUser']>) => {
     setCurrentUser((prev) => ({ ...prev, ...user }));
@@ -88,10 +71,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const updateTheme = (newTheme: ThemeType) => {
     setTheme(newTheme);
-  };
-
-  const updateParentalControls = (controls: Partial<AppContextType['parentalControls']>) => {
-    setParentalControls((prev) => ({ ...prev, ...controls }));
   };
 
   const updateProgress = (module: string, completed: boolean, stars: number) => {
@@ -110,11 +89,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         currentUser,
         language,
         theme,
-        parentalControls,
         updateUser,
         updateLanguage,
         updateTheme,
-        updateParentalControls,
         updateProgress,
       }}
     >
